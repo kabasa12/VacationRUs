@@ -54,14 +54,16 @@ exports.insertUserSignUp = async (user) => {
         u = await con.execute("INSERT INTO users (first_name,last_name,email,password,role_id) VALUES (?,?,?,?,?)",
                               [user.first_name,user.last_name,user.email,user.password,user.role_id])
         u = u[0];
+        
         return u;
     } catch (err) {
-        u = err.message;
+        u = err;
         throw u;
     }
 }
 
 exports.insertUser = async (req, res, next) => {
+    
     let user = {
         first_name: req.query.first_name,
         last_name: req.query.last_name,

@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-
+const aut = require('../auth/jwtAuth');
 
 const authController = require('../controllers/authController');
 
-router.get('/login', authController.login);
-router.get('/signUp', authController.signUp);
+router.post('/login',aut, authController.login);
+router.post('/signUp',aut, authController.signUp);
 
 module.exports = router;

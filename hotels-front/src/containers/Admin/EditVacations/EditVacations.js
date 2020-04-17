@@ -131,7 +131,9 @@ class EditVacations extends Component {
 
         let editForm;
         if(this.state.showVacationEditor) {
-            editForm = <Modal show={this.state.showVacationEditor} modalClosed={this.closeModalHandler}>
+            editForm = <Modal show={this.state.showVacationEditor} 
+                              modalClosed={this.closeModalHandler} 
+                              edit={this.state.showVacationEditor}>
                             <CreateVacation vacation={this.state.updatedVacation}
                                             updateVacationById={this.updateVacationById}
                                             cancelledUpdate={this.cancelledUpdate}

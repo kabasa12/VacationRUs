@@ -1,0 +1,3 @@
+export {
+    initVacations
+} from './vacations';

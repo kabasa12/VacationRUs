@@ -11,11 +11,14 @@ class Modal extends Component {
     }
 
     render () {
+        let classes;
+        this.props.edit ? classes = "Edit" : classes = "Modal";
+
         return (
             <Aux>
                 <Backdrop show={this.props.show} clicked={this.props.modalClosed} />
                 <div
-                    className="Modal"
+                    className={classes}
                     style={{
                         transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
                         opacity: this.props.show ? '1' : '0'

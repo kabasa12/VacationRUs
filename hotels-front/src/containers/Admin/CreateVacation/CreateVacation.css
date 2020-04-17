@@ -23,6 +23,10 @@
     background-color: rgb(54, 52, 53);
 }
 
+.col-md-10{
+    text-align: center;
+    background-color: rgb(54, 52, 53);
+}
 .InputLable{
     margin: 0px 10px;
     font-size: 25px;
@@ -43,6 +47,10 @@
     margin:0;
     vertical-align: middle;
     position: relative; 
+}
+
+#image{
+    color: white;
 }
 
 input {
@@ -88,7 +96,7 @@ input {
         display: block;
         margin: auto;
     }
-
+    
     .form-container{
         margin-left: 15px;
     }

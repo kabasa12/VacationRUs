@@ -3,15 +3,34 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
 import { BrowserRouter as Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
+
+import vacationsReducer from './store/reducers/vacations';
+import adminReducer from './store/reducers/admin';
 
 const history = createBrowserHistory();
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const rootReducer = combineReducers({
+  vacations: vacationsReducer,
+  admin: adminReducer
+});
+
+const store = createStore(rootReducer, composeEnhancers(
+  applyMiddleware(thunk)
+));
 
 const app = (
-  <Router>
-    <App history={history} />
-  </Router>
+  <Provider store={store}>
+    <Router>
+      <App history={history} />
+    </Router>
+  </Provider>
+  
 )
 ReactDOM.render(
   <React.StrictMode>

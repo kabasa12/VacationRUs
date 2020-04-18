@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const auth = require('../auth/jwtAuth');
 
 const vacationsController = require('../controllers/vacationsController');
 

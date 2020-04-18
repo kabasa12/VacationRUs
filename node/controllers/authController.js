@@ -1,7 +1,8 @@
 const con = require('../utils/database');
 const userService = require('../controllers/usersController');
 const bcrypt = require('bcrypt');
-const saltRounds = 10
+const saltRounds = 10;
+const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res, next) => {
     let response = {
@@ -21,7 +22,7 @@ exports.login = async (req, res, next) => {
 
         user = await userService.getUserByEmailLogin(email);
         user = user[0];
-
+        console.log(user);
         if(!user) {
             response.err = 'Invalid email or password!';
             resCode = 401;
@@ -31,10 +32,18 @@ exports.login = async (req, res, next) => {
         const match = await bcrypt.compare(password, user.password);
 
         if (match) {
+        console.log("match");    
+            let expirationDate =  1800;
+            jwt.sign({user,exp:expirationDate}, 'secretkey', (err, token) => {           
+                response.success = true;
+                resCode = 200;
+                response.idToken = token;
+                response.expirationDate = expirationDate;
+                response.localId = user.id;
+                response.role_id = user.role_id;
+                res.send(response); 
+              });
             
-            //create token
-            response.success = true;
-            resCode = 200;
         } else {
             response.err = 'Invalid email or password!';
             resCode = 401;
@@ -43,8 +52,7 @@ exports.login = async (req, res, next) => {
 
     } catch (err) {
         response.err = err.message;
-    }
-     res.send(response);
+    } 
 }
 
 exports.signUp = async (req, res, next) => {

@@ -1,26 +1,65 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Switch, Route, withRouter, Redirect } from "react-router-dom";
+import { connect } from 'react-redux';
+
 import Layout from './components/Layout/Layout';
 import VacationSelector from './containers/VacationSelector/VacationSelector';
 import CreateVacation from './containers/Admin/CreateVacation/CreateVacation';
 import EditVacations from './containers/Admin/EditVacations/EditVacations';
 import Statistics from './containers/Admin/Statistics/Statistics'
-import { Switch, Route } from "react-router-dom";
+import Auth from './containers/Auth/Auth';
+import Logout from './containers/Auth/Logout/Logout';
 
-const app = (props) => {
+import * as actions from './store/actions/index';
+
+class App extends Component{
   
-  return (
+  componentDidMount () {
+    this.props.onTryAutoSignup();
+  }
+  
+  render(){
+    let routes = (
+      <Switch>
+        <Route path="/auth" component={Auth} />
+        <Route path="/" exact component={VacationSelector} />
+        <Redirect to="/" />
+      </Switch>
+    );
+
+    if ( this.props.isAuthenticated ) {
+      routes = (
+        <Switch>
+          <Route path="/newVacation" render={(props) => <CreateVacation  history={this.props.history}/>}/>
+          <Route path="/editVacations" render={(props) => <EditVacations history={props.history}/>}/>
+          <Route path="/statistics" render={(props) => <Statistics history={props.history}/>}/>
+          <Route path="/logout" component={Logout} />
+          <Route path="/" exact component={VacationSelector} />
+          <Redirect to="/" />
+        </Switch>
+      );
+    }
+
+    return (
       <div>
         <Layout>
-          <Switch>
-            <Route path="/newVacation" render={(props) => <CreateVacation  history={props.history}/>}/>
-            <Route path="/editVacations" render={(props) => <EditVacations history={props.history}/>}/>
-            <Route path="/statistics" render={(props) => <Statistics history={props.history}/>}/>
-            <Route path="/" render={(props) => <VacationSelector history={props.history}/>}/>
-          </Switch>
-          {/* <div className="parallax"></div> */}
+          {routes}
         </Layout>
       </div>
     );
+  }
 }
 
-export default app;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.token !== null
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignup: () => dispatch( actions.authCheckState() )
+  };
+};
+
+export default withRouter( connect( mapStateToProps, mapDispatchToProps )( App ) );

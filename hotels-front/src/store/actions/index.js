@@ -1,3 +1,6 @@
 export {
-    initVacations
-} from './vacations';
+    auth,
+    logout,
+    setAuthRedirectPath,
+    authCheckState
+} from './auth';

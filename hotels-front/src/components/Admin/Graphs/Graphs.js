@@ -28,7 +28,6 @@ class Graphs extends Component {
         }
     }
 
-
     render() {
         
         let statistics = [];

@@ -1,16 +1,21 @@
 const con = require('../utils/database');
-
+const jwt = require('jsonwebtoken');
 
 exports.getVacations = async (req, res, next) => {
     let vacations = [];
-  
+    // jwt.verify(req.token, 'secretkey', (err) => {
+    //     if(err) {
+    //       res.sendStatus(403);
+    //     }
+    // }); 
+    let id = req.query.id
     try {
         vacations = await con.execute(`SELECT v.id,v.name,v.destination,v.description,
                                         v.image,DATE_FORMAT(v.from_date, "%Y-%m-%d") as from_date,
                                         DATE_FORMAT(v.to_date, "%Y-%m-%d") as to_date,v.price,
                                         v.num_of_followers,v.show_vacation,v.last_updated_date,
-                                       COALESCE((SELECT 1 FROM users_vacation uv 
-                                                  WHERE uv.user_id = 4 and vacation_id = v.id),0) as follow 
+                                        COALESCE((SELECT 1 FROM users_vacation uv 
+                                                    WHERE uv.user_id = ${id} and vacation_id = v.id),0) as follow 
                                         FROM vacations v WHERE v.show_vacation = 1
                                         ORDER BY follow DESC`);
         vacations = vacations[0];

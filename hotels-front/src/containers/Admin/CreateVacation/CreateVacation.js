@@ -58,8 +58,6 @@ class CreateVacation extends Component{
         
         updatedForm[inputID] = updatedFormElm
         this.setState({vacation:updatedForm})
-
-
     }
 
     addVacationHandler = (event) => {

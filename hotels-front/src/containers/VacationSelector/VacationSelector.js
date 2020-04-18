@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 
 import {withRouter} from 'react-router-dom';
 import Aux from '../../components/Layout/hoc/_Aux';
-
 import VacationCard from '../../components/Vacations/VacationCard/VacationCard';
-import * as actions from '../../store/actions/index';
 import * as axios from 'axios';
 
 class VacationSelector extends Component {
@@ -16,12 +14,12 @@ class VacationSelector extends Component {
 
     componentDidMount() {
         this.getVacations();
-        //this.props.onInitVacations();
     }
 
     async getVacations() {
         try {
-            await axios.get(`http://www.localhost:4000/getVacations`).then(response => {
+            await axios.get(`http://www.localhost:4000/getVacations/?id=${this.props.userId}`,{headers: {"Authorization" : `Bearer ${this.props.token}`}})
+            .then(response => {
                 this.setState({ vacations: response.data })
             })
         } catch (e) {
@@ -121,14 +119,11 @@ class VacationSelector extends Component {
 
 const mapStateToProps = state => {
     return {
-        //vacations: state.vacations.vacations,
-        error: state.vacations.error
+        error: state.auth.error,
+        isAuthenticated: state.auth.token !== null,
+        userId : state.auth.userId,
+        token : state.auth.token,
+        authRedirectPath: state.auth.authRedirectPath
     };
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onInitVacations: () => dispatch(actions.initVacations()),
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(VacationSelector));
+};
+export default connect( mapStateToProps)(withRouter(VacationSelector));

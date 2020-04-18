@@ -3,6 +3,7 @@ import Layout from './components/Layout/Layout';
 import VacationSelector from './containers/VacationSelector/VacationSelector';
 import CreateVacation from './containers/Admin/CreateVacation/CreateVacation';
 import EditVacations from './containers/Admin/EditVacations/EditVacations';
+import Statistics from './containers/Admin/Statistics/Statistics'
 import { Switch, Route } from "react-router-dom";
 
 const app = (props) => {
@@ -13,6 +14,7 @@ const app = (props) => {
           <Switch>
             <Route path="/newVacation" render={(props) => <CreateVacation  history={props.history}/>}/>
             <Route path="/editVacations" render={(props) => <EditVacations history={props.history}/>}/>
+            <Route path="/statistics" render={(props) => <Statistics history={props.history}/>}/>
             <Route path="/" render={(props) => <VacationSelector history={props.history}/>}/>
           </Switch>
           {/* <div className="parallax"></div> */}

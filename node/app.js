@@ -2,12 +2,13 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
 var corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200
 }
-
+app.use(logger('dev'));
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

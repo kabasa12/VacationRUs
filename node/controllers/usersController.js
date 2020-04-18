@@ -109,3 +109,29 @@ exports.updateUserByid = async (req, res, next) => {
 
     res.send(u)
 }
+
+exports.getStatistics = async (req, res) => {
+    let response = {
+        success: false,
+    }
+    let code = 401;
+
+    const query = `SELECT v.name as 'VacationName', COUNT(v.id) as OrderCount 
+                     FROM vacations v LEFT JOIN users_vacation uv ON v.id = uv.vacation_id
+                    GROUP BY v.id`
+
+    try {
+        const stat = await con.execute(query)
+
+        response.data = stat[0];
+        response.success = true;
+        code = 201;
+    }
+    catch (err) {
+        response.err = err;
+        code = 500;
+    }
+
+    res.status(code).json(response)
+
+}

@@ -1,8 +1,7 @@
-//require('dotenv').config();
 const con = require('../utils/database');
-//const refresh = require('./tokenRefresh');
 
-module.exports = authenticateToken = async (req, res, next) => {
+
+module.exports = auth = async (req, res, next) => {
     
     const bearerHeader = req.headers['authorization'];
     if(typeof bearerHeader !== 'undefined') {

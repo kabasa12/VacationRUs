@@ -33,12 +33,13 @@ exports.login = async (req, res, next) => {
 
         if (match) {
         console.log("match");    
-            let expirationDate =  1800;
-            jwt.sign({user,exp:expirationDate}, 'secretkey', (err, token) => {           
+            let expiresIn =  60 * 60;
+            jwt.sign({user}, 'secretkey',{expiresIn:expiresIn}, (err, token) => {           
+                console.log(err)
                 response.success = true;
                 resCode = 200;
                 response.idToken = token;
-                response.expirationDate = expirationDate;
+                response.expirationDate = expiresIn;
                 response.localId = user.id;
                 response.role_id = user.role_id;
                 res.send(response); 

@@ -29,14 +29,30 @@ const upload = multer({
 });
 
 
+function verifyToken(req, res, next) {
+    const bearerHeader = req.headers['authorization'];
+    if(typeof bearerHeader !== 'undefined') {
+      
+      const bearer = bearerHeader.split(' ');
+      const bearerToken = bearer[1];
+
+      req.token = bearerToken;
+    
+      next();
+    } else {
+      res.sendStatus(403);
+    }
+  
+  };
+
 router.get('/getVacations', vacationsController.getVacations);
-router.get('/getAllVacations', vacationsController.getAllVacations);
+router.get('/getAllVacations',verifyToken, vacationsController.getAllVacations);
 router.get('/getVacationById', vacationsController.getVacationById);
 router.get('/getuserVacationById', vacationsController.getuserVacationById);
-router.post('/insertVacation', upload.single('image'), vacationsController.insertVacation);
+router.post('/insertVacation',verifyToken, upload.single('image'), vacationsController.insertVacation);
 router.post('/insertUserVacation', vacationsController.insertUserVacation);
 router.delete('/deleteUserVacation', vacationsController.deleteUserVacation);
-router.put('/updateVacationByid/:id',upload.single('image'), vacationsController.updateVacationByid);
+router.put('/updateVacationByid/:id',verifyToken, upload.single('image'), vacationsController.updateVacationByid);
 router.put('/updateFolowersVacationByid', vacationsController.updateFolowersVacationByid);
 
 module.exports = router;

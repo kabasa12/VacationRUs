@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import './CreateVacation.css';
+import { connect } from 'react-redux';
 import {withRouter} from 'react-router-dom';
+
+import './CreateVacation.css';
 import {GiMoneyStack,GiVikingLonghouse} from 'react-icons/gi';
 import {IoMdImages,IoMdGlobe,IoMdCheckmarkCircleOutline} from 'react-icons/io';
 import {GoCalendar,GoCommentDiscussion} from 'react-icons/go';
@@ -132,11 +134,12 @@ class CreateVacation extends Component{
         vacationEntries.forEach(entry => {
             formData.append(entry[0], entry[1]);
             });    
-  
+
         try {
             await axios.post(`http://www.localhost:4000/insertVacation`,formData, {
                 headers: {
-                    'content-type': 'multipart/form-data'
+                    'content-type': 'multipart/form-data',
+                    "Authorization" : `Bearer ${this.props.token}`
                 }}).then(response => {
                 this.props.history.push('/');
                 console.log(response);
@@ -284,6 +287,14 @@ class CreateVacation extends Component{
     }
 }
 
-export default withRouter(CreateVacation);
+const mapStateToProps = state => {
+    return {
+        error: state.auth.error,
+        isAuthenticated: state.auth.token !== null,
+        userId : state.auth.userId,
+        token : state.auth.token,
+        authRedirectPath: state.auth.authRedirectPath
+    };
+};
 
-//<CustomForm onNewHandler={this.onChangeHandler} {...this.state} onEditHandler={this.props.onChangeHandler} />
+export default connect( mapStateToProps)(withRouter(CreateVacation));

@@ -8,9 +8,25 @@ import * as axios from 'axios';
 
 class VacationSelector extends Component {
 
-    state = {
-        vacations: [{}],
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+                vacations: [{}],
+                userId:null,
+                token:null,
+                role_id:null
+            };
+        if(!this.props.userId) {
+            this.state.userId = localStorage.getItem('userId');
+            this.state.token = localStorage.getItem('token');
+            this.state.role_id = localStorage.getItem('role_id');
+        }else {
+            this.state.userId = this.props.userId;
+            this.state.token = this.props.token;
+            this.state.role_id = this.props.role_id;
+        }
+    }
+    
 
     componentDidMount() {
         this.getVacations();
@@ -18,7 +34,7 @@ class VacationSelector extends Component {
 
     async getVacations() {
         try {
-            await axios.get(`http://www.localhost:4000/getVacations/?id=${this.props.userId}`,{headers: {"Authorization" : `Bearer ${this.props.token}`}})
+            await axios.get(`http://www.localhost:4000/getVacations/?id=${this.state.userId}`,{headers: {"Authorization" : `Bearer ${this.state.token}`}})
             .then(response => {
                 this.setState({ vacations: response.data })
             })

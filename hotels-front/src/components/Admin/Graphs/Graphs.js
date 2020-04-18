@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import CanvasJSReact from './canvasjs.react';
 import axios from 'axios'
@@ -20,8 +21,9 @@ class Graphs extends Component {
     
     async getStatistics() {
         try {
-            await axios.get(`http://www.localhost:4000/getStatistics`).then(response => {
-                this.setState({ data: response.data })
+            await axios.get(`http://www.localhost:4000/getStatistics`,
+                {headers: {"Authorization" : `Bearer ${this.props.token}`}}).then(response => {
+                this.setState({ data: response.data },()=> console.log(response.data))
             })
         } catch (e) {
             console.log(e);
@@ -65,4 +67,13 @@ class Graphs extends Component {
     };
 }
 
-export default Graphs;
+const mapStateToProps = state => {
+    return {
+        error: state.auth.error,
+        isAuthenticated: state.auth.token !== null,
+        userId : state.auth.userId,
+        token : state.auth.token,
+        authRedirectPath: state.auth.authRedirectPath
+    };
+};
+export default connect( mapStateToProps)(Graphs);

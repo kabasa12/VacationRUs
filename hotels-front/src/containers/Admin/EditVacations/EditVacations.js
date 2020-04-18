@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
+import { connect } from 'react-redux';
 import { withRouter} from 'react-router-dom';
+
 import Aux from '../../../components/Layout/hoc/_Aux';
 import CreateVacation from '../CreateVacation/CreateVacation';
 import Modal from '../../../components/Layout/Modal/Modal';
@@ -43,7 +45,8 @@ class EditVacations extends Component {
 
     async getAllVacations() {    
         try {
-            await axios.get(`http://www.localhost:4000/getAllVacations`).then(response => {
+            await axios.get(`http://www.localhost:4000/getAllVacations`,
+                {headers: {"Authorization" : `Bearer ${this.props.token}`}}).then(response => {
                 this.setState({ vacations: response.data })
             })
         } catch (e) {
@@ -168,8 +171,14 @@ class EditVacations extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        error: state.auth.error,
+        isAuthenticated: state.auth.token !== null,
+        userId : state.auth.userId,
+        token : state.auth.token,
+        authRedirectPath: state.auth.authRedirectPath
+    };
+};
 
-export default withRouter(EditVacations);
-
-//updateVacation={this.state.updateVacation} 
- //                editVacation={this.state.showVacationEditor} 
+export default connect( mapStateToProps)(withRouter(EditVacations));

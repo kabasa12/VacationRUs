@@ -1,4 +1,5 @@
 const con = require('../utils/database');
+const jwt = require('jsonwebtoken');
 
 exports.getUsers = async (req, res, next) => {
     let users = [];
@@ -111,13 +112,18 @@ exports.updateUserByid = async (req, res, next) => {
 }
 
 exports.getStatistics = async (req, res) => {
+    
+    jwt.verify(req.token, 'secretkey', (err) => {
+        if(err) {
+            res.sendStatus(403);
+        } });
     let response = {
         success: false,
     }
     let code = 401;
 
     const query = `SELECT v.name as 'VacationName', COUNT(uv.id) as OrderCount 
-                     FROM vacations v LEFT JOIN users_vacation uv ON v.id = uv.vacation_id
+                    FROM vacations v LEFT JOIN users_vacation uv ON v.id = uv.vacation_id
                     GROUP BY v.id`
 
     try {
@@ -126,6 +132,7 @@ exports.getStatistics = async (req, res) => {
         response.data = stat[0];
         response.success = true;
         code = 201;
+        console.log(response)
     }
     catch (err) {
         response.err = err;
@@ -133,5 +140,4 @@ exports.getStatistics = async (req, res) => {
     }
 
     res.status(code).json(response)
-
 }

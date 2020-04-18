@@ -2,12 +2,7 @@ const con = require('../utils/database');
 const jwt = require('jsonwebtoken');
 
 exports.getVacations = async (req, res, next) => {
-    let vacations = [];
-    // jwt.verify(req.token, 'secretkey', (err) => {
-    //     if(err) {
-    //       res.sendStatus(403);
-    //     }
-    // }); 
+    let vacations = []; 
     let id = req.query.id
     try {
         vacations = await con.execute(`SELECT v.id,v.name,v.destination,v.description,
@@ -26,14 +21,21 @@ exports.getVacations = async (req, res, next) => {
 }
 
 exports.getAllVacations = async (req, res, next) => {
+    
+    jwt.verify(req.token, 'secretkey', (err) => {
+        if(err) {
+            res.sendStatus(403);
+        } });
     let vacations = [];
+
     try {
         vacations = await con.execute(`SELECT v.id,v.name,v.destination,v.description,
                                         v.image,DATE_FORMAT(v.from_date, "%Y-%m-%d") as from_date,
                                         DATE_FORMAT(v.to_date, "%Y-%m-%d") as to_date,v.price,
                                         v.num_of_followers,v.show_vacation,v.last_updated_date 
-                                       FROM vacations v ORDER BY id`);
+                                    FROM vacations v ORDER BY id`);
         vacations = vacations[0];
+
     } catch (err) {
         vacations = err.message;
     }
@@ -67,7 +69,13 @@ exports.getuserVacationById = async (req, res, next) => {
 }
 
 exports.insertVacation = async (req, res, next) => {
-    
+
+    jwt.verify(req.token, 'secretkey', (err) => {
+        if(err) {
+            console.log(err)
+            res.sendStatus(403);
+        } });
+
     const fileLocation = req.file ? 'http://localhost:4000/uploads/' + req.file.filename : null;
     const vacation = {
         name: req.body.name,
@@ -84,13 +92,12 @@ exports.insertVacation = async (req, res, next) => {
     let v = [];
     try {
         v = await con.execute("INSERT INTO vacations (name,destination,description,image,from_date,to_date,price,num_of_followers,show_vacation) VALUES (?,?,?,?,?,?,?,?,?)",
-                              [vacation.name,vacation.destination,vacation.description,vacation.image,
-                               vacation.from_date,vacation.to_date,vacation.price,vacation.num_of_followers,vacation.show_vacation])
+                            [vacation.name,vacation.destination,vacation.description,vacation.image,
+                            vacation.from_date,vacation.to_date,vacation.price,vacation.num_of_followers,vacation.show_vacation])
         v = v[0];
     } catch (err) {
         v = err.message;
-    }
-
+    }        
     res.send(v);
 }
 

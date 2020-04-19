@@ -8,7 +8,6 @@ export const authStart = () => {
 };
 
 export const authSuccess = (token, userId, role_id) => {
-    console.log("authSuccess")
     return {
         type: actionTypes.AUTH_SUCCESS,
         idToken: token,
@@ -50,9 +49,6 @@ export const auth = (email, password, isSignup) => {
             password: password,
             returnSecureToken: true
         };
-        if (isSignup) {
-            authData = {}
-        }
         
         let url = 'http://www.localhost:4000/login';
         

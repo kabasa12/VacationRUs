@@ -72,7 +72,6 @@ exports.insertVacation = async (req, res, next) => {
 
     jwt.verify(req.token, 'secretkey', (err) => {
         if(err) {
-            console.log(err)
             res.sendStatus(403);
         } });
 
@@ -137,11 +136,27 @@ exports.deleteUserVacation = async (req, res, next) => {
     res.send(v);
 }
 
+exports.deleteVacation = async (req, res, next) => {
+    jwt.verify(req.token, 'secretkey', (err) => {
+        if(err) {
+            res.sendStatus(403);
+        } });
+
+    let id = req.params.id;
+    let v = [];
+    try {
+        v = await con.execute(`DELETE FROM vacations WHERE id = ${id}`)
+        v = v[0];
+    } catch (err) {
+        v = err.message;
+    }
+    res.send(v);
+}
+
 exports.updateVacationByid = async (req, res, next) => {
     
     jwt.verify(req.token, 'secretkey', (err) => {
         if(err) {
-            console.log(err)
             res.sendStatus(403);
         } });
     let id = req.params.id;

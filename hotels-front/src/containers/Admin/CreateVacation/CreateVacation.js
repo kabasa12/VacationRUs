@@ -174,8 +174,9 @@ class CreateVacation extends Component{
 
         let buttons = <div className="buttons">
                         <button type="button" className="btn Cancelled" onClick={this.cancelHandler}>Cancel</button>
-                        <button className="btn Success">Add</button>
+                        <button className="btn Success">{this.state.editVacation ? "Update" : "Add"}</button>
                      </div>
+        
         if(this.state.showModal) {
             buttons = <Modal show={this.state.showModal} modalClosed={this.closeModalHandler}>
                         <FormErrors validationCheck={this.state.validationCheck}/>

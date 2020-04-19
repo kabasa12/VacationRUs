@@ -54,6 +54,21 @@ class EditVacations extends Component {
         }
     }
 
+    deleteVacation = async (vacation_id) => {
+        try {
+            await axios.delete(`http://www.localhost:4000/deleteVacation/${vacation_id}`, {
+                headers: {"Authorization" : `Bearer ${this.props.token}`}})
+                .then(response => {
+                        let _vacations = [...this.state.vacations ];
+                        _vacations = _vacations.filter( vac => vac.id !== vacation_id)
+            
+                        this.setState({vacations:_vacations});
+            })
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     cancelledUpdate = () => {
         this.props.history.push('/editVacations');
     }
@@ -127,7 +142,10 @@ class EditVacations extends Component {
                     <td>{vacation.price} $</td>
                     <td>{lastDate}</td>
                     <td className="TblTdBtn">
-                        <div className="btn btn-info btn-sm" onClick={() => this.getVacationById(vacation.id)}>Edit</div>
+                        <div className="btn edit btn-sm" onClick={() => this.getVacationById(vacation.id)}>Edit</div>
+                    </td>
+                    <td className="TblTdBtn">
+                        <div className="btn delete btn-sm" onClick={() => this.deleteVacation(vacation.id)}>Delete</div>
                     </td>
                 </tr>
             )
@@ -159,6 +177,7 @@ class EditVacations extends Component {
                                 <th scope="col">Price</th>
                                 <th scope="col">Last Updated</th>
                                 <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>

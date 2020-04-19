@@ -52,6 +52,7 @@ router.get('/getuserVacationById', vacationsController.getuserVacationById);
 router.post('/insertVacation',verifyToken, upload.single('image'), vacationsController.insertVacation);
 router.post('/insertUserVacation', vacationsController.insertUserVacation);
 router.delete('/deleteUserVacation', vacationsController.deleteUserVacation);
+router.delete('/deleteVacation/:id',verifyToken, vacationsController.deleteVacation);
 router.put('/updateVacationByid/:id',verifyToken, upload.single('image'), vacationsController.updateVacationByid);
 router.put('/updateFolowersVacationByid', vacationsController.updateFolowersVacationByid);
 

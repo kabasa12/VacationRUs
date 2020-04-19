@@ -23,7 +23,7 @@ class Graphs extends Component {
         try {
             await axios.get(`http://www.localhost:4000/getStatistics`,
                 {headers: {"Authorization" : `Bearer ${this.props.token}`}}).then(response => {
-                this.setState({ data: response.data },()=> console.log(response.data))
+                this.setState({ data: response.data });
             })
         } catch (e) {
             console.log(e);
@@ -38,16 +38,24 @@ class Graphs extends Component {
         if (this.state.data.data ) {
             statistics = [...this.state.data.data];
             dataPoint = statistics.map(data => {
-                return { label: data.VacationName, y: data.OrderCount };
+                if (this.props.type === "bubble") {
+                    let size = Math.floor(3 * data.OrderCount)
+                    return { label: data.VacationName, y: data.OrderCount, z:size };
+                } else {
+                    return { label: data.VacationName, y: data.OrderCount };
+                }
             });
         };
         const options = {
             animationEnabled: true,
             exportEnabled: true,
-            theme: "dark2", //"light1", "dark1", "dark2"
+            theme: "dark2",
+            axisX:{labelFontColor:"gold"},
             title: {
-                text: "Vacations Statistics"
+                text: "Vacations Statistics",
+                fontColor:"gold"
             },
+            
             data: [{
                 type: this.props.type,
                 indexLabelFontColor: "#5A5757",
@@ -56,7 +64,7 @@ class Graphs extends Component {
             }]
         }
         return(
-            <Container component="div" maxWidth="lg" style={{marginBottom: '3rem', marginTop: '2rem' ,fontFamily:'Times New Roman'}}>
+            <Container component="div" maxWidth="lg" style={{marginBottom: '3rem', marginTop: '2rem' ,color:'gold'}}>
                 <CssBaseline />
                 <CanvasJSChart options={options}/>
             </Container>

@@ -18,7 +18,7 @@ class Auth extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    minLength: true
+                    minLength: 2
                 },
                 valid: false,
                 touched: false
@@ -32,7 +32,7 @@ class Auth extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    minLength: true
+                    minLength: 2
                 },
                 valid: false,
                 touched: false
@@ -190,12 +190,12 @@ class Auth extends Component {
                 {errorMessage}
                 <form onSubmit={this.submitHandler}>
                     {form}
-                    <button className="btn btn-success">Submit</button>
+                    <button className="btn authSuccess">Submit</button>
                 </form>
                 <hr></hr>
                 <button 
                     onClick={this.switchAuthModeHandler}
-                    className="btn btn-danger">Switch To {this.state.isSignup ? 'SignIn' : 'Register'}</button>
+                    className="btn authSwitch">Switch To {this.state.isSignup ? 'SignIn' : 'Register'}</button>
             </div>
         );
     }

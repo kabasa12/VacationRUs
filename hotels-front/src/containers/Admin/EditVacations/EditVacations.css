@@ -7,7 +7,8 @@
 }
 
 .Tbl th {
-    background-color: lightgray ;
+    background-color: rgb(54, 52, 53);
+    color: gold;
 }
 
 .Tbl thead, .Tbl tbody{
@@ -26,6 +27,27 @@
 
 .table-wrapper-scroll-y {
     display: block;
+}
+
+.edit{
+    background-color:rgb(54, 52, 53);
+    color:gold;
+    transition-duration: 0.4s;
+}
+
+.edit:hover {
+    background-color:gold; 
+    color:black;
+}
+
+.delete {
+    background-color: salmon;
+    transition-duration: 0.4s;
+}
+
+.delete:hover {
+    background-color: firebrick;
+    color: white;
 }
 
 @media (max-width: 600px) {

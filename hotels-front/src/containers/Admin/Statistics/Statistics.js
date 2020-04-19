@@ -21,9 +21,9 @@ class Statistics extends Component {
                     justify="center"
                     style={{ minHeight: '50vh'}}
                 >
-                    <Graphs type='column'/>
+                    <Graphs type='bubble'/>
                     <Graphs type='spline'/>
-                    <Graphs type='pie'/>
+                    <Graphs type='column'/>
                 </Grid>
              </div>
         );

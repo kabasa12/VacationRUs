@@ -73,7 +73,9 @@ class VacationSelector extends Component {
     }
 
     updateFollowers = async (id, numOfFollowers) => {
-
+        if(!this.props.isAuthenticated){
+            return;
+        }
         let updatedNumOfFollow = numOfFollowers;
         let index = this.state.vacations.findIndex(vac => vac.id === id);
         //if follow is true then call remove method

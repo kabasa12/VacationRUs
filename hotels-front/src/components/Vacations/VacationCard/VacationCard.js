@@ -70,7 +70,7 @@ const VacationCard = (props) => {
           </Box>
         }
         title={Varr.name}
-        subheader={<Box color="white"> {Varr.destination} </Box>}
+        subheader={<Box component="div" color="white"> {Varr.destination} </Box>}
       />
       <CardMedia
         component="img"
@@ -80,11 +80,11 @@ const VacationCard = (props) => {
         title='coolimg'
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          <Box color="gold"> Price: {Varr.price}$ </Box>
+        <Typography variant="body2" color="textSecondary" component="div">
+          <Box component="div" color="gold"> Price: {Varr.price}$ </Box>
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          <Box color="white"> {fromDate} - {toDate} </Box>
+        <Typography variant="body2" color="textSecondary" component="div">
+          <Box component="div" color="white"> {fromDate} - {toDate} </Box>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -98,8 +98,8 @@ const VacationCard = (props) => {
           </div>
         </IconButton>
         <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              <Box color="gold"> Read More... </Box>
+            <Typography variant="body2" color="textSecondary" component="div">
+              <Box component="div" color="gold"> Read More... </Box>
             </Typography>
           </CardContent>
         <IconButton style={{color:'white'}}

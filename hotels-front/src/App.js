@@ -19,6 +19,7 @@ class App extends Component{
   }
   
   render(){
+
     let routes = (
       <Switch>
         <Route path="/auth" component={Auth} />
@@ -27,7 +28,7 @@ class App extends Component{
       </Switch>
     );
 
-    if ( this.props.isAuthenticated ) {
+    if ( this.props.isAdminAuth ) {
       routes = (
         <Switch>
           <Route path="/newVacation" render={(props) => <CreateVacation  history={this.props.history}/>}/>
@@ -38,7 +39,19 @@ class App extends Component{
           <Redirect to="/" />
         </Switch>
       );
+    } else {
+      if(this.props.isAuthenticated && !this.props.isAdminAuth) {
+        routes = (
+          <Switch>
+            <Route path="/logout" component={Logout} />
+            <Route path="/" exact component={VacationSelector} />
+            <Redirect to="/" />
+          </Switch>
+        );
+      }
     }
+
+    
 
     return (
       <div>
@@ -52,7 +65,10 @@ class App extends Component{
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.auth.token !== null,
+    isAdminAuth: (state.auth.token !== null) && (localStorage.getItem('role_id') === "1"),
+    tolen: state.auth.token,
+    roleId : state.auth.role_id
   };
 };
 

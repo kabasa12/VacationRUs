@@ -138,6 +138,12 @@ exports.deleteUserVacation = async (req, res, next) => {
 }
 
 exports.updateVacationByid = async (req, res, next) => {
+    
+    jwt.verify(req.token, 'secretkey', (err) => {
+        if(err) {
+            console.log(err)
+            res.sendStatus(403);
+        } });
     let id = req.params.id;
     const fileLocation = req.file ? 'http://localhost:4000/uploads/' + req.file.filename : null;
     let vacation = {

@@ -70,7 +70,7 @@ const VacationCard = (props) => {
           </Box>
         }
         title={Varr.name}
-        subheader={Varr.destination} 
+        subheader={<Box color="white"> {Varr.destination} </Box>}
       />
       <CardMedia
         component="img"
@@ -81,10 +81,10 @@ const VacationCard = (props) => {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          Price: {Varr.price} $
+          <Box color="gold"> Price: {Varr.price}$ </Box>
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          {fromDate} - {toDate}
+          <Box color="white"> {fromDate} - {toDate} </Box>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -99,10 +99,10 @@ const VacationCard = (props) => {
         </IconButton>
         <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              Read More...
+              <Box color="gold"> Read More... </Box>
             </Typography>
           </CardContent>
-        <IconButton
+        <IconButton style={{color:'white'}}
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}

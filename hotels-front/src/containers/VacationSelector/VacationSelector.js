@@ -8,33 +8,20 @@ import * as axios from 'axios';
 
 class VacationSelector extends Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-                vacations: [{}],
-                userId:null,
-                token:null,
-                role_id:null
-            };
-        if(!this.props.userId) {
-            this.state.userId = localStorage.getItem('userId');
-            this.state.token = localStorage.getItem('token');
-            this.state.role_id = localStorage.getItem('role_id');
-        }else {
-            this.state.userId = this.props.userId;
-            this.state.token = this.props.token;
-            this.state.role_id = this.props.role_id;
-        }
-    }
+    state = {
+        vacations: [{}],
+        userId:null,
+        token:null,
+        role_id:null
+    };
     
-
     componentDidMount() {
         this.getVacations();
     }
 
     async getVacations() {
         try {
-            await axios.get(`http://www.localhost:4000/getVacations/?id=${this.state.userId}`,{headers: {"Authorization" : `Bearer ${this.state.token}`}})
+            await axios.get(`http://www.localhost:4000/getVacations/?id=${this.props.userId}`,{headers: {"Authorization" : `Bearer ${this.props.token}`}})
             .then(response => {
                 this.setState({ vacations: response.data })
             })
@@ -44,12 +31,11 @@ class VacationSelector extends Component {
     }
 
     addUserVacation = async (vacation_id) => {
-        //Need To Get UserId By Login
-        let userId = 4;
+
         let index = this.state.vacations.findIndex(vac => vac.id === vacation_id);
 
         try {
-            await axios.post(`http://www.localhost:4000/insertUserVacation/?user_id=${userId}&vacation_id=${vacation_id}`).then(response => {
+            await axios.post(`http://www.localhost:4000/insertUserVacation/?user_id=${this.props.userId}&vacation_id=${vacation_id}`).then(response => {
                 let _vacations = [ ...this.state.vacations ];
                 _vacations[index].follow = 1;
                 ++_vacations[index].num_of_followers;
@@ -61,11 +47,10 @@ class VacationSelector extends Component {
     }
 
     removeUserVacation = async (vacation_id) => {
-        let userId = 4;
         let index = this.state.vacations.findIndex(vac => vac.id === vacation_id);
 
         try {
-            await axios.delete(`http://www.localhost:4000/deleteUserVacation/?user_id=${userId}&vacation_id=${vacation_id}`).then(response => {
+            await axios.delete(`http://www.localhost:4000/deleteUserVacation/?user_id=${this.props.userId}&vacation_id=${vacation_id}`).then(response => {
                 let _vacations = [ ...this.state.vacations ];
                 _vacations[index].follow = 0;
                 --_vacations[index].num_of_followers;

@@ -44,9 +44,9 @@ class Graphs extends Component {
         const options = {
             animationEnabled: true,
             exportEnabled: true,
-            theme: "light2", //"light1", "dark1", "dark2"
+            theme: "dark2", //"light1", "dark1", "dark2"
             title: {
-                text: "Orders Statistics"
+                text: "Vacations Statistics"
             },
             data: [{
                 type: this.props.type,
@@ -56,12 +56,9 @@ class Graphs extends Component {
             }]
         }
         return(
-            <Container component="div" maxWidth="lg" style={{marginBottom: '3rem', marginTop: '2rem'}}>
+            <Container component="div" maxWidth="lg" style={{marginBottom: '3rem', marginTop: '2rem' ,fontFamily:'Times New Roman'}}>
                 <CssBaseline />
-                <CanvasJSChart options={options}
-                /* onRef={ref => this.chart = ref} */
-                />
-                {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
+                <CanvasJSChart options={options}/>
             </Container>
         )
     };

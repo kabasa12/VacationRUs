@@ -9,6 +9,34 @@ import * as actions from '../../store/actions/index';
 class Auth extends Component {
     state = {
         controls: {
+            firstName: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'First Name'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: true
+                },
+                valid: false,
+                touched: false
+            },
+            lastName: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Last Name'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: true
+                },
+                valid: false,
+                touched: false
+            },
             email: {
                 elementType: 'input',
                 elementConfig: {
@@ -93,7 +121,18 @@ class Auth extends Component {
 
     submitHandler = ( event ) => {
         event.preventDefault();
-        this.props.onAuth( this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup );
+        if (!this.state.isSignup){
+            this.props.onAuth( this.state.controls.email.value, 
+                               this.state.controls.password.value, 
+                               this.state.isSignup );
+        } else {
+            this.props.onRegister( this.state.controls.firstName.value,
+                                   this.state.controls.lastName.value,
+                                   this.state.controls.email.value, 
+                                   this.state.controls.password.value, 
+                                   this.state.isSignup );
+        }
+        
     }
 
     switchAuthModeHandler = () => {
@@ -105,10 +144,19 @@ class Auth extends Component {
     render () {
         const formElementsArray = [];
         for ( let key in this.state.controls ) {
-            formElementsArray.push( {
-                id: key,
-                config: this.state.controls[key]
-            } );
+            if(!this.state.isSignup) {
+                if(key === "password" || key === "email") {
+                    formElementsArray.push( {
+                        id: key,
+                        config: this.state.controls[key]
+                    } );
+                }  
+            } else {
+                formElementsArray.push( {
+                    id: key,
+                    config: this.state.controls[key]
+                } );
+            }  
         }
 
         let form = formElementsArray.map( formElement => (
@@ -142,11 +190,12 @@ class Auth extends Component {
                 {errorMessage}
                 <form onSubmit={this.submitHandler}>
                     {form}
-                    <button className="btn btn-success">SUBMIT</button>
+                    <button className="btn btn-success">Submit</button>
                 </form>
+                <hr></hr>
                 <button 
                     onClick={this.switchAuthModeHandler}
-                    className="btn btn-danger">SWITCH TO {this.state.isSignup ? 'SIGNIN' : 'SIGNUP'}</button>
+                    className="btn btn-danger">Switch To {this.state.isSignup ? 'SignIn' : 'Register'}</button>
             </div>
         );
     }
@@ -164,6 +213,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: ( email, password, isSignup ) => dispatch( actions.auth( email, password, isSignup ) ),
+        onRegister: (firstName, lastName, email, password, isSignup) => 
+            dispatch(actions.register(firstName, lastName, email, password, isSignup)),
         onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
     };
 };

@@ -19,11 +19,11 @@ class Statistics extends Component {
                     direction="column"
                     alignItems="center"
                     justify="center"
-                    style={{ minHeight: '50vh' }}
+                    style={{ minHeight: '50vh'}}
                 >
-                    <Graphs type='pie'/>
                     <Graphs type='column'/>
-                    <Graphs type='line'/>
+                    <Graphs type='spline'/>
+                    <Graphs type='pie'/>
                 </Grid>
              </div>
         );

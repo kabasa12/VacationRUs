@@ -7,11 +7,11 @@ const navigationItems = (props) => (
     
     <ul className="NavigationItems" onClick={props.clicked}>
         <NavigationItem link="/" exact>Home</NavigationItem>
-        {props.isAuthenticated ? 
+        {(props.isAdminAuth) ? 
           <NavigationItem link="/newVacation">New</NavigationItem>: null}
-        {props.isAuthenticated ? 
+        {(props.isAdminAuth) ? 
           <NavigationItem link="/editVacations">Edit</NavigationItem>: null}
-        {props.isAuthenticated ? 
+        {(props.isAdminAuth) ? 
           <NavigationItem link="/statistics">Graphs</NavigationItem>: null}
         {!props.isAuthenticated
             ? <NavigationItem link="/auth">Authenticate</NavigationItem>

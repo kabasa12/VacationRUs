@@ -73,7 +73,8 @@ class EditVacations extends Component {
         try {
             await axios.put(`http://www.localhost:4000/updateVacationByid/${id}`,formData, {
                 headers: {
-                    'content-type': 'multipart/form-data'
+                    'content-type': 'multipart/form-data',
+                    "Authorization" : `Bearer ${this.props.token}`
                 }}).then(response => {
 
                 this.closeModalHandler();

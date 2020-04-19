@@ -22,7 +22,7 @@ exports.login = async (req, res, next) => {
 
         user = await userService.getUserByEmailLogin(email);
         user = user[0];
-        console.log(user);
+
         if(!user) {
             response.err = 'Invalid email or password!';
             resCode = 401;
@@ -32,7 +32,7 @@ exports.login = async (req, res, next) => {
         const match = await bcrypt.compare(password, user.password);
 
         if (match) {
-        console.log("match");    
+
             let expiresIn =  60 * 60;
             jwt.sign({user}, 'secretkey',{expiresIn:expiresIn}, (err, token) => {           
                 console.log(err)
@@ -61,7 +61,7 @@ exports.signUp = async (req, res, next) => {
         success: false,
     }
     let resCode = 500;
-
+    console.log(req.body);
     const { first_name,last_name,email, password} = req.body;
     let user = [];
     try {

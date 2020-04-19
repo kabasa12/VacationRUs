@@ -2,23 +2,22 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
 export const authStart = () => {
-    console.log("authStart")
     return {
         type: actionTypes.AUTH_START
     };
 };
 
-export const authSuccess = (token, userId) => {
+export const authSuccess = (token, userId, role_id) => {
     console.log("authSuccess")
     return {
         type: actionTypes.AUTH_SUCCESS,
         idToken: token,
-        userId: userId
+        userId: userId,
+        role_id: role_id
     };
 };
 
 export const authFail = (error) => {
-    console.log("authFail")
     return {
         type: actionTypes.AUTH_FAIL,
         error: error
@@ -26,7 +25,6 @@ export const authFail = (error) => {
 };
 
 export const logout = () => {
-    console.log("logout")
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
     localStorage.removeItem('userId');
@@ -45,22 +43,21 @@ export const checkAuthTimeout = (expirationTime) => {
 };
 
 export const auth = (email, password, isSignup) => {
-    console.log("auth")
     return dispatch => {
         dispatch(authStart());
-        const authData = {
+        let authData = {
             email: email,
             password: password,
             returnSecureToken: true
         };
-        
-        let url = 'http://www.localhost:4000/signUp';
-        if (!isSignup) {
-            url = 'http://www.localhost:4000/login';
+        if (isSignup) {
+            authData = {}
         }
+        
+        let url = 'http://www.localhost:4000/login';
+        
         axios.post(url, authData)
             .then(response => {
-                console.log(response);
                 const expirationDate = new Date(new Date().getTime() + response.data.expirationDate * 1000);
                 
                 localStorage.setItem('token', response.data.idToken);
@@ -68,7 +65,7 @@ export const auth = (email, password, isSignup) => {
                 localStorage.setItem('userId', response.data.localId);
                 localStorage.setItem('role_id', response.data.role_id);
 
-                dispatch(authSuccess(response.data.idToken, response.data.localId));
+                dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.role_id));
                 dispatch(checkAuthTimeout(response.data.expirationDate));
             })
             .catch(err => {
@@ -77,8 +74,30 @@ export const auth = (email, password, isSignup) => {
     };
 };
 
+export const register = (firstName, lastName, email, password, isSignup) => {
+    return dispatch => {
+        dispatch(authStart());
+        let authData = {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            password: password,
+            returnSecureToken: true
+        };
+        
+        let url = 'http://www.localhost:4000/signUp';
+        
+        axios.post(url, authData)
+            .then(response => {
+                dispatch(setAuthRedirectPath('/'));
+            })
+            .catch(err => {
+                dispatch(authFail(err.response.data.error));
+            });
+    };
+};
+
 export const setAuthRedirectPath = (path) => {
-    console.log("setAuthRedirectPath")
     return {
         type: actionTypes.SET_AUTH_REDIRECT_PATH,
         path: path
@@ -86,7 +105,6 @@ export const setAuthRedirectPath = (path) => {
 };
 
 export const authCheckState = () => {
-    console.log("authCheckState")
     return dispatch => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -97,7 +115,8 @@ export const authCheckState = () => {
                 dispatch(logout());
             } else {
                 const userId = localStorage.getItem('userId');
-                dispatch(authSuccess(token, userId));
+                const roleId = localStorage.getItem('role_id');
+                dispatch(authSuccess(token, userId, roleId));
                 dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));
             }   
         }

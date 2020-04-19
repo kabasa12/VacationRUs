@@ -8,6 +8,14 @@ import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
 
 class Layout extends Component {
+    
+    // constructor(props){
+    //     super(props);
+    //     this.state ={role_id:null,
+    //                  showSideDrawer: false};
+    //     this.props.roleId ? this.state.role_id = this.props.roleId : 
+    //                         this.state.role_id = localStorage.getItem('role_id');
+    // }
     state = {
         showSideDrawer: false
     }
@@ -29,6 +37,7 @@ class Layout extends Component {
                 <div className="row Spacer"></div>
                 <SideDrawer
                     isAuth={this.props.isAuthenticated}
+                    isAdminAuth={this.props.isAdminAuth}
                     open={this.state.showSideDrawer}
                     closed={this.sideDrawerClosedHandler} />
                 <main className="Content">
@@ -42,7 +51,9 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.auth.token !== null
+        isAuthenticated: state.auth.token !== null,
+        roleId : state.auth.role_id,
+        isAdminAuth: (state.auth.token !== null) && (localStorage.getItem('role_id') === "1"),
     };
 };
 

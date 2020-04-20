@@ -142,7 +142,6 @@ class CreateVacation extends Component{
                     "Authorization" : `Bearer ${this.props.token}`
                 }}).then(response => {
                 this.props.history.push('/');
-                console.log(response);
             })
         } catch (e) {
             console.log(e);

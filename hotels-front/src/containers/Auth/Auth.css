@@ -31,6 +31,9 @@
     color: white;
 }
 
+.error{
+    color: red;
+}
 hr{
     border-bottom: 2px solid gold
 }

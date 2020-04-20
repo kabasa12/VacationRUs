@@ -66,7 +66,7 @@ class App extends Component{
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token !== null,
-    isAdminAuth: (state.auth.token !== null) && (localStorage.getItem('role_id') === "1"),
+    isAdminAuth: (state.auth.token !== null) && (state.auth.role_id === 1),
     tolen: state.auth.token,
     roleId : state.auth.role_id
   };

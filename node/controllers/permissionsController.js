@@ -34,14 +34,13 @@ exports.getRolePermission = async (req, res, next) => {
     res.send(rolePerm);
 }
 
-exports.getPermissionByUserId = async (req, res, next) => {
+exports.getRoleByUserId = async (req, res, next) => {
     let id = req.query.id;
     let rolePerm = [];
     try {
-        rolePerm = await con.execute(`SELECT p.id as permissions_id,p.name as permission_name,r.name  as role_name,
+        rolePerm = await con.execute(`SELECT r.name  as role_name,
                                              u.email,u.first_name,u.last_name
-                                        FROM permissions p JOIN roles r ON p.role_id = r.id
-                                        JOIN users u ON u.role_id = r.id
+                                        FROM roles r JOIN users u ON u.role_id = r.id
                                        WHERE u.id = "${id}"`);
         rolePerm = rolePerm[0];
     } catch (err) {

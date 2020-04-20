@@ -132,7 +132,6 @@ class Auth extends Component {
                                    this.state.controls.password.value, 
                                    this.state.isSignup );
         }
-        
     }
 
     switchAuthModeHandler = () => {
@@ -175,7 +174,7 @@ class Auth extends Component {
 
         if (this.props.error) {
             errorMessage = (
-                <p>{this.props.error.message}</p>
+                <p className="error">{this.props.error}</p>
             );
         }
 

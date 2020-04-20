@@ -1,15 +1,27 @@
 const con = require('../utils/database');
 const jwt = require('jsonwebtoken');
+const RoleService = require('../controllers/permissionsController');
 
 exports.getUsers = async (req, res, next) => {
+    let response = {
+        success: false,
+    }
+    let resCode = 500;
+
     let users = [];
     try {
         users = await con.execute(`SELECT * FROM users`);
         users = users[0];
+
+        response.success = true;
+        response.data = users;
+        resCode = 200;
+
     } catch (err) {
-        users = err.message;
+        response.err = err.message;
+        response.success = false;
     }
-    res.send(users);
+    res.status(resCode).json(response);
 }
 
 exports.getUserById = async (req, res, next) => {
@@ -25,6 +37,22 @@ exports.getUserById = async (req, res, next) => {
 }
 
 exports.getUserByEmail = async (req, res, next) => {
+    let response = {
+        success: false,
+    }
+    let resCode = 500;
+
+    if(!req.query.user_id) {
+        response.err = 'You are not authorized!';
+        resCode = 403;
+        res.status(resCode).json(response);
+    }
+    const user_id = req.query.user_id;
+
+    role = await RoleService.getRoleByUserId(user_id);
+    role = role[0];
+    if (role !== 'Admin') return res.sendStatus(403);
+    
     let email = req.query.email;
 
     let user = [];

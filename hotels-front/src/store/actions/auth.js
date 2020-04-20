@@ -86,9 +86,10 @@ export const register = (firstName, lastName, email, password, isSignup) => {
         axios.post(url, authData)
             .then(response => {
                 dispatch(setAuthRedirectPath('/'));
+                
             })
             .catch(err => {
-                dispatch(authFail(err.response.data.error));
+                dispatch(authFail(err.response.data.err));
             });
     };
 };

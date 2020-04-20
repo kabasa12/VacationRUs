@@ -8,17 +8,10 @@ import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
 
 class Layout extends Component {
-    
-    // constructor(props){
-    //     super(props);
-    //     this.state ={role_id:null,
-    //                  showSideDrawer: false};
-    //     this.props.roleId ? this.state.role_id = this.props.roleId : 
-    //                         this.state.role_id = localStorage.getItem('role_id');
-    // }
+
     state = {
         showSideDrawer: false
-    }
+    }  
 
     sideDrawerClosedHandler = () => {
         this.setState( { showSideDrawer: false } );
@@ -52,9 +45,8 @@ class Layout extends Component {
 const mapStateToProps = state => {
     return {
         isAuthenticated: state.auth.token !== null,
-        roleId : state.auth.role_id,
-        isAdminAuth: (state.auth.token !== null) && (localStorage.getItem('role_id') === "1"),
+        isAdminAuth: (state.auth.token !== null) && (state.auth.role_id === 1)
     };
 };
 
-export default connect( mapStateToProps )( Layout );
+export default connect( mapStateToProps)(Layout);

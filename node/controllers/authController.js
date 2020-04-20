@@ -35,14 +35,14 @@ exports.login = async (req, res, next) => {
 
             let expiresIn =  60 * 60;
             jwt.sign({user}, 'secretkey',{expiresIn:expiresIn}, (err, token) => {           
-                console.log(err)
+
                 response.success = true;
                 resCode = 200;
                 response.idToken = token;
                 response.expirationDate = expiresIn;
                 response.localId = user.id;
                 response.role_id = user.role_id;
-                res.send(response); 
+                res.status(resCode).json(response); 
               });
             
         } else {
@@ -61,7 +61,7 @@ exports.signUp = async (req, res, next) => {
         success: false,
     }
     let resCode = 500;
-    console.log(req.body);
+    
     const { first_name,last_name,email, password} = req.body;
     let user = [];
     try {
@@ -78,22 +78,30 @@ exports.signUp = async (req, res, next) => {
                        password:hash,
                        role_id:2}
 
-        user = await userService.insertUserSignUp(newUser);
-        user = user[0];
+        try{
+            user = await userService.insertUserSignUp(newUser);
+            user = user[0];
+
+            response.success = true;
+            response.data = "User Created Successfully";
+            resCode = 200;
+            res.status(resCode).json(response);
         
-        response.success = true;
-        response.data = "User Created Successfully";
-        resCode = 200;    
-        
+        } catch(err){
+            if (err.code == 'ER_DUP_ENTRY') {
+                response.err = err.message;
+                resCode = 409
+                res.status(resCode).json(response);
+
+            } else {
+                response.err = "Please try again later";
+                resCode = 500
+                res.status(resCode).json(response);
+            }
+        }                    
     } catch (err) {  
-        if (err.code == 'ER_DUP_ENTRY') {
-            response.err = err.message;
-            resCode = 409
-        }else {
-            response.err = "Please try again later";
-            resCode = 500
-        }
-        
+        response.err = "Please try again later";
+        resCode = 500 ;
+        res.status(resCode).json(response);    
     }
-    res.send(response);
 }

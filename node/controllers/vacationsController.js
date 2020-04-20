@@ -137,12 +137,13 @@ exports.deleteUserVacation = async (req, res, next) => {
 }
 
 exports.deleteVacation = async (req, res, next) => {
+    
     jwt.verify(req.token, 'secretkey', (err) => {
         if(err) {
             res.sendStatus(403);
         } });
-
     let id = req.params.id;
+
     let v = [];
     try {
         v = await con.execute(`DELETE FROM vacations WHERE id = ${id}`)
@@ -150,6 +151,7 @@ exports.deleteVacation = async (req, res, next) => {
     } catch (err) {
         v = err.message;
     }
+
     res.send(v);
 }
 

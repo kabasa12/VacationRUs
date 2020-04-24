@@ -2,7 +2,6 @@ import React from 'react';
 import './FormErrors.css'
 
 const formErrors = (props) => {
-    console.log(props.validationCheck)
     return(
         <div>
             <h4 className="FormHeader">Please Fix The Following Issues</h4>

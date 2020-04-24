@@ -201,4 +201,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect( mapStateToProps)(withRouter(EditVacations));
+export default withRouter(connect( mapStateToProps)(EditVacations));

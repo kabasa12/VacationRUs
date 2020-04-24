@@ -73,7 +73,7 @@ class VacationSelector extends Component {
     }
 
     updateFollowers = async (id, numOfFollowers) => {
-        if(!this.props.isAuthenticated){
+        if(!this.props.isAuthenticated || this.props.isAdminAuth){
             return;
         }
         let updatedNumOfFollow = numOfFollowers;
@@ -126,8 +126,8 @@ const mapStateToProps = state => {
         isAuthenticated: state.auth.token !== null,
         userId : state.auth.userId,
         token : state.auth.token,
-        roleId : state.auth.role_id,
+        isAdminAuth: (state.auth.token !== null) && (state.auth.role_id === 1),
         authRedirectPath: state.auth.authRedirectPath
     };
 };
-export default connect( mapStateToProps)(withRouter(VacationSelector));
+export default withRouter(connect( mapStateToProps)(VacationSelector));

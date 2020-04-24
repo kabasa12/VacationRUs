@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2020 at 09:43 PM
+-- Generation Time: Apr 24, 2020 at 05:56 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -133,7 +133,12 @@ INSERT INTO `users_vacation` (`id`, `vacation_id`, `user_id`, `creation_date`, `
 (15, 2, 26, '2020-04-20 22:38:30', '2020-04-20 22:38:30'),
 (16, 4, 26, '2020-04-20 22:38:33', '2020-04-20 22:38:33'),
 (17, 16, 26, '2020-04-20 22:38:35', '2020-04-20 22:38:35'),
-(18, 15, 26, '2020-04-20 22:38:37', '2020-04-20 22:38:37');
+(18, 15, 26, '2020-04-20 22:38:37', '2020-04-20 22:38:37'),
+(19, 1, 26, '2020-04-24 17:33:30', '2020-04-24 17:33:30'),
+(21, 28, 4, '2020-04-24 17:34:27', '2020-04-24 17:34:27'),
+(22, 16, 21, '2020-04-24 17:35:25', '2020-04-24 17:35:25'),
+(23, 28, 21, '2020-04-24 17:35:26', '2020-04-24 17:35:26'),
+(24, 1, 4, '2020-04-24 18:55:34', '2020-04-24 18:55:34');
 
 -- --------------------------------------------------------
 
@@ -161,7 +166,7 @@ CREATE TABLE `vacations` (
 --
 
 INSERT INTO `vacations` (`id`, `name`, `destination`, `description`, `image`, `from_date`, `to_date`, `price`, `num_of_followers`, `show_vacation`, `creation_date`, `last_updated_date`) VALUES
-(1, 'Cockroach Hotel', 'Larnaca Cyprus', 'Cockroach Hotel is located in the centre of Larnaca city, just 50 metres away from Phinikoudes Beach. It offers accommodation with free Wi-Fi access and a fully equipped fitness centre', 'http://localhost:4000/uploads/2038hotel1.jpg', '2020-04-04 00:00:00', '2020-04-08 00:00:00', 2501, 1, 1, '2020-03-08 09:49:15', '2020-04-20 22:37:37'),
+(1, 'Cockroach Hotel', 'Larnaca Cyprus', 'Cockroach Hotel is located in the centre of Larnaca city, just 50 metres away from Phinikoudes Beach. It offers accommodation with free Wi-Fi access and a fully equipped fitness centre', 'http://localhost:4000/uploads/2047hotel16.jpg', '2020-04-04 00:00:00', '2020-04-08 00:00:00', 3100, 3, 1, '2020-03-08 09:49:15', '2020-04-24 18:55:34'),
 (2, 'BadBreakfast Hotel', 'Haifa Israel', 'The Haifa BadBreakfast Hotel overlooks the Haifa Bay and is just a 2-minute walk from the Baha\'i Gardens in the Carmel area of Haifa. It offers a bar and terrace with panoramic views across the bay. Free WiFi is available in all areas', 'http://localhost:4000/uploads/2038hotel2.jpg', '2020-05-05 00:00:00', '2020-05-08 00:00:00', 3100, 1, 1, '2020-03-08 09:54:15', '2020-04-20 22:38:30'),
 (3, 'Corona Vip Hotel', 'HollyWood LA', 'Corona Vip Hotel is Where All the Action Begins! Corona Vip Hotel is conveniently located across the street from a Redline Metro ( Subway or Tube ) station at the corner of Vermont Avenue and Santa Monica Blvd.. Hollywood Hotel has just completed a restoration of it\'s 3000 sq ft courtyard', 'http://localhost:4000/uploads/2042hotel6.jpg', '2020-03-12 00:00:00', '2020-03-20 00:00:00', 2720, 0, 0, '2020-04-04 16:48:02', '2020-04-20 14:45:43'),
 (4, 'HollyShit Hotel', 'Jerusalem Israel', 'A family run hotel situated in an old Arab mansion located only a few meters from the Garden Tomb and The Damascus Gate and within a short walking distance to major historical and cultural sites.Originally built by a feudal lord in the heart of the ancient city of Jerusalem', 'http://localhost:4000/uploads/2038hotel4.jpg', '2020-05-11 00:00:00', '2020-05-18 00:00:00', 1100, 2, 1, '2020-04-04 17:30:38', '2020-04-20 22:38:33'),
@@ -174,8 +179,9 @@ INSERT INTO `vacations` (`id`, `name`, `destination`, `description`, `image`, `f
 (13, 'Gaaton Resort', 'Nahariya Israel', 'Come and loose all your mony', 'http://localhost:4000/uploads/2038hotel11.jpg', '2020-07-21 00:00:00', '2020-07-24 00:00:00', 1500, 0, 0, '2020-04-12 21:34:43', '2020-04-15 22:54:57'),
 (14, 'Hell Hotel', 'Corona City', 'All Sick Fuck Come Here', 'http://localhost:4000/uploads/2038hotel12.jpg', '2020-04-12 00:00:00', '2020-04-19 00:00:00', 1450, 0, 0, '2020-04-13 00:00:02', '2020-04-15 22:55:06'),
 (15, 'Balagan Motel', 'Tel-Aviv Israel', 'The most ugly place you can spend your money on,We will love to take it though', 'http://localhost:4000/uploads/2042hotel23.jpg', '2020-08-19 00:00:00', '2020-08-25 00:00:00', 3210, 2, 1, '2020-04-13 00:05:32', '2020-04-20 22:38:37'),
-(16, 'ChopStick Hotel', 'Tel-Aviv Israel', 'We have the most beautiful sunset you\'ll ever see', 'http://localhost:4000/uploads/2041hotel19.jpg', '2020-04-12 00:00:00', '2020-04-24 00:00:00', 3750, 2, 1, '2020-04-13 22:05:21', '2020-04-20 22:38:35'),
-(25, 'Alex Palace', 'Gadera Israel', 'We have the most beautiful sunset you\'ll ever see', 'http://localhost:4000/uploads/2043hotel24.jpg', '2020-09-08 00:00:00', '2020-09-16 00:00:00', 5120, 2, 1, '2020-04-20 21:43:53', '2020-04-20 22:37:43');
+(16, 'ChopStick Hotel', 'Tel-Aviv Israel', 'We have the most beautiful sunset you\'ll ever see', 'http://localhost:4000/uploads/2041hotel19.jpg', '2020-04-12 00:00:00', '2020-04-24 00:00:00', 3750, 3, 1, '2020-04-13 22:05:21', '2020-04-24 17:35:25'),
+(25, 'Alex Palace', 'Gadera Israel', 'We have the most beautiful sunset you\'ll ever see', 'http://localhost:4000/uploads/2043hotel24.jpg', '2020-09-08 00:00:00', '2020-09-16 00:00:00', 5120, 2, 1, '2020-04-20 21:43:53', '2020-04-20 22:37:43'),
+(28, 'Miranda\'s Place', 'Moscow Russia', 'Best Vacation you will ever have', 'http://localhost:4000/uploads/2047hotel17.jpg', '2020-06-16 00:00:00', '2020-06-19 00:00:00', 3650, 2, 1, '2020-04-24 17:30:40', '2020-04-24 17:35:26');
 
 --
 -- Indexes for dumped tables
@@ -253,13 +259,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users_vacation`
 --
 ALTER TABLE `users_vacation`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `vacations`
 --
 ALTER TABLE `vacations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Constraints for dumped tables

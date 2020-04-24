@@ -19,10 +19,9 @@ exports.login = async (req, res, next) => {
             resCode = 400;
             res.status(resCode).json(response);
         }
-
         user = await userService.getUserByEmailLogin(email);
         user = user[0];
-
+        
         if(!user) {
             response.err = 'Invalid email or password!';
             resCode = 401;

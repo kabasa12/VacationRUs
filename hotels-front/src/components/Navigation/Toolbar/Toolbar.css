@@ -4,7 +4,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: black;
+    background-color: rgb(54, 52, 53);
     display: flex;
     justify-content: space-between;
     align-items: center;

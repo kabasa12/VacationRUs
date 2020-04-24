@@ -297,4 +297,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect( mapStateToProps)(withRouter(CreateVacation));
+export default withRouter(connect( mapStateToProps)(CreateVacation));

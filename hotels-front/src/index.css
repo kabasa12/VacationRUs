@@ -4,7 +4,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-image: url("https://cdn.pixabay.com/photo/2012/06/08/06/19/sky-49520__340.jpg"); 
+  background-image: url("./assets/background.jpg"); 
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -19,7 +19,7 @@ code {
 
 .parallax {
   /* The image used */
-  background-image: url("https://cdn.pixabay.com/photo/2019/06/21/06/04/the-drink-4288601__340.jpg");
+  background-image: url("./assets/background.jpg");
 
   /* Set a specific height */
   min-height: 500px;

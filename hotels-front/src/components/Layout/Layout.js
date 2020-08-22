@@ -33,7 +33,7 @@ class Layout extends Component {
                     isAdminAuth={this.props.isAdminAuth}
                     open={this.state.showSideDrawer}
                     closed={this.sideDrawerClosedHandler} />
-                <main className="Content">
+                <main className="container-fluid">
                     {this.props.children}
                 </main>
             </Aux>

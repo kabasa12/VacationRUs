@@ -47,7 +47,7 @@ exports.getVacationById = async (req, res, next) => {
     let vacation = [];
     try {
         vacation = await con.execute(`SELECT * FROM vacations WHERE id = "${id}"`);
-        vacation = vacation[0];
+        vacation = vacation[0]
     } catch (err) {
         vacation = err.message;
     }

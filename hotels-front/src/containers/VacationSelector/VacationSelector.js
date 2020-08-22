@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import Aux from '../../components/Layout/hoc/_Aux';
 import VacationCard from '../../components/Vacations/VacationCard/VacationCard';
+import VacationTotal from './../../components/Vacations/VacationTotal/VacationTotal';
+import Welcome from './../../components/Layout/Welcome/Welcome';
 import * as axios from 'axios';
+import './VacationSelector.css';
 
 class VacationSelector extends Component {
 
@@ -12,7 +15,9 @@ class VacationSelector extends Component {
         vacations: [{}],
         userId:null,
         token:null,
-        role_id:null
+        role_id:null,
+        goTotal:false,
+        totalVacation:[]
     };
     
     componentDidMount() {
@@ -96,6 +101,25 @@ class VacationSelector extends Component {
         }
     }
 
+    goToTotal = async (vacationId) => {
+        // if(!this.props.isAuthenticated || this.props.isAdminAuth){
+        //     return;
+        // }
+
+        try {
+            await axios.get(`http://www.localhost:4000/getVacationById/?id=${vacationId}`).then(response => {
+                this.setState({ goTotal:true,totalVacation: response.data})
+            })
+        } catch (e) {
+            console.log(e);
+        }
+        //this.setState({goTotal:true,totalVacationId:vacationId})
+    }
+
+    updateGoTotal = () => {
+        this.setState({goTotal:false});
+    }
+
     render() {
         let vacationsArr = [ ...this.state.vacations ];
         let vacationComponents;
@@ -104,18 +128,41 @@ class VacationSelector extends Component {
             vacationComponents = vacationsArr.map((vac, index) => {
                 return <VacationCard vacations={vac}
                     key={index}
-                    updateFollowers={this.updateFollowers}/>
+                    updateFollowers={this.updateFollowers}
+                    goToTotal={this.goToTotal}/>
                 }
             )
         }
-        return (
-            <Aux>
-                <div className="container-fluid">
-                    <div className="row">
-                        {vacationComponents}
-                    </div>
-                </div>
-            </Aux>
+
+        let layout;
+        if (this.state.goTotal){
+            layout = <Aux>
+                        <div>
+                            <VacationTotal vac={this.state.totalVacation}
+                                           updateGoTotal ={this.updateGoTotal}/>
+                        </div>
+                    </Aux>
+        } else {
+            layout = <Aux>
+                        <div className="paral">
+                            <div>
+                                <Welcome />
+                            </div>
+                        </div>
+                        <div className="paral paralsec">
+                            <div className="row">
+                                {vacationComponents}
+                            </div>
+                        </div>
+                        <footer className="wn-footer">
+                            <small><p><i className="fa fa-copyright" aria-hidden="true"></i> All rights preserve to kabesa group</p></small>
+                        </footer>    
+                    </Aux>
+        }
+        return (<Aux>
+                    {layout}
+                </Aux>
+            
         );
     }
 }

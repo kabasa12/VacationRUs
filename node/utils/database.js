@@ -1,6 +1,6 @@
 var mysql = require('mysql2');
 
-var con = mysql.createConnection({
+var con = mysql.createConnection(process.env.DATABASE_URL || {
     host: "localhost",
     user: "root",
     password: "",

@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const path = require('path')
 
 var corsOptions = {
     origin: '*',
@@ -25,8 +26,17 @@ app.use(users);
 app.use(permissions);
 app.use(vacations);
 
-app.use((req, res) => {
-    res.send('<h1>Page not found</h1>')
-})
 
-app.listen(4000);
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('../hotels-front/build'));
+    app.get('*',(req,res) => {
+        res.sendFile(path.join(__dirname,'../hotels-front','build','index.html'))
+    })
+}else{
+    app.use((req, res) => {
+        res.send('<h1>Page not found</h1>')
+    })
+}
+
+app.listen(process.env.PORT || 4000);

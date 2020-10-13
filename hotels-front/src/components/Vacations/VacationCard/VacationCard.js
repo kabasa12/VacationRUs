@@ -95,7 +95,7 @@ const VacationCard = (props) => {
           <Box component="div" color="gray"> 1 room for {totalStay} nights </Box>
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions> {/*disableSpacing*/}
         <Tooltip title="Add to favorite">
           <IconButton aria-label="add to favorites"
                       onClick={(e) => {

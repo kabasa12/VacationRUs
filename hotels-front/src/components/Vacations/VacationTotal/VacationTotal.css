@@ -3,9 +3,13 @@
     left: auto;
 }
 
+.totalImgWrap{
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
 .totalHeader{
     margin-top:20px;
-    border:1px solid gray;
     padding-top:15px;
     padding-bottom: 15px;
 }
@@ -13,7 +17,7 @@
 .totalHeadWrap{
     display: inline-flex;
     padding: 5px 12px 15px;
-    border-bottom: 1px solid gray;
+    border-bottom: 3px solid gray;
 }
 
 .totalLable{
@@ -32,6 +36,10 @@
     vertical-align: top;
 }
 
+.desc{
+    padding-top: 10px;
+}
+
 .totalHeader .totalH{
     font-size: 16px;
     font-weight: bold;
@@ -42,7 +50,7 @@
 
 .totalHeader .totalSubH{
     font-size: 14px;
-    color:gray;
+    color:rgb(54, 52, 53);
     margin-bottom: 10px;
     font-family: 'Times New Roman', Times, serif;
     line-height: 1.4;

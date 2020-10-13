@@ -29,9 +29,10 @@ app.use(vacations);
 
 
 if(process.env.NODE_ENV === 'production'){
-    app.use(express.static('../hotels-front/build'));
+    console.log(process.env.NODE_ENV);
+    app.use(express.static('hotels-front/build'));
     app.get('*',(req,res) => {
-        res.sendFile(path.join(__dirname,'../hotels-front','build','index.html'))
+        res.sendFile(path.join(__dirname,'hotels-front','build','index.html'))
     })
 }else{
     app.use((req, res) => {
